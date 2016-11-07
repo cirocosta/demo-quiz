@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>devQA :: Quiz</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:900,700,600,400,300">
+
+	<link rel="stylesheet" type="text/css" href="assets/style/reset.css">
+	<link rel="stylesheet" type="text/css" href="assets/style/fonts/galano/galano.css">
+	<link rel="stylesheet" type="text/css" href="assets/style/fonts/icon-12/icon-12.css">
+	<link rel="stylesheet" type="text/css" href="assets/style/fonts/icon-16/icon-16.css">
+	<link rel="stylesheet" type="text/css" href="assets/style/main.css">
+
+</head>
+<body class="blue">
+	<div class="wrapper flex-column-center-center">
+		<header class="grid-quiz">
+			<div class="content-header question">
+				<h1 id="validation"></h1>
+				<h1 id="title">What does the fox say?</h1>
+			</div>
+		</header>
+
+		<main class="grid-quiz question">
+			<section class="half">
+				<div onclick="success(this)" class="content-body clickable flex-column-center-center">
+					<h3>WhooHo</h3>
+					<p>The fox is a lonely wolf that says wolfy things</p>
+				</div>	
+			</section>
+
+			<section class="half">
+				<div onclick="error(this)" class="content-body clickable flex-column-center-center">
+					<h3>Yay Yay!</h3>
+					<p>The fox is a lonely wolf that says wolfy things</p>
+				</div>
+			</section>
+		</main>
+	</div>
+
+	<script type="text/javascript">
+		const body = document.querySelector('body');
+		const validation = document.getElementById('validation');
+
+		function success(event) {
+			validation.innerHTML = 'Correct!';
+			handleAnswer(event, 'correct');
+		}
+
+		function error(event) {
+			validation.innerHTML = 'Wrong :(';
+			handleAnswer(event, 'error');
+		}
+
+		function handleAnswer(event, className){
+			body.classList.add(className);
+			const card = event.parentNode;
+			card.classList.add(className);
+			const otherCard = card.parentNode.querySelector('.half:not(.' + className + ')');
+			otherCard.style.display = 'none';
+		}
+	</script>
+</body>
+</html>
