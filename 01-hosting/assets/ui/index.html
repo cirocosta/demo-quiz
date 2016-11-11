@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>devQA :: Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="stylesheet" type="text/css" href="assets/style/reset.css">
+  <link rel="stylesheet" type="text/css" href="assets/style/fonts/galano/galano.css">
+  <link rel="stylesheet" type="text/css" href="assets/style/fonts/opensans/opensans.css">
+  <link rel="stylesheet" type="text/css" href="assets/style/fonts/icon-12/icon-12.css">
+  <link rel="stylesheet" type="text/css" href="assets/style/fonts/icon-16/icon-16.css">
+  <link rel="stylesheet" type="text/css" href="assets/style/main.css">
+</head>
+<body class="blue">
+  <div class="content">
+    <div class="wrapper ranking-offset flex-column-center-center">
+
+      <header class="grid-quiz">
+        <div class="content-header question">
+          <div id="validation">
+            <h1></h1>
+            <p></p>
+          </div>
+          <h1 id="title"></h1>
+        </div>
+      </header>
+
+      <main class="grid-quiz question">
+      </main>
+
+      <footer>
+        <button id="next" onclick="showNextQuestion();" class="btn btn-next">Next</button>
+      </footer>
+    </div>
+  </div>
+
+  <script src="/assets/wedeploy.js"></script>
+  <script src="./index.js"></script>
+</body>
+</html>
