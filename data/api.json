@@ -1,6 +1,43 @@
 [
-	{
-		"path": "/*",
-		"data": true
-	}
+  {
+    "path": "/answers",
+    "method": "post",
+    "data": true,
+    "auth": {
+      "validator": "$auth.id === $body.userId"
+    },
+    "parameters": {
+      "userId": {
+        "type": "string",
+        "required": true
+      },
+      "questionId": {
+        "type": "string",
+        "required": true
+      },
+      "correct": {
+        "type": "boolean",
+        "required": true
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true
+      }
+    }
+  },
+  {
+    "path": "/answers",
+    "method": "get",
+    "data": true,
+    "auth": {
+      "validator": "$auth != null"
+    },
+    "parameters": {
+      "filter": {
+        "value": {
+          "userId": "$auth.id"
+        }
+      }
+    }
+  }
 ]
