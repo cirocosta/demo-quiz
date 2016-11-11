@@ -1,9 +1,12 @@
 'use strict';
 
 const DOMAIN = window.location.hostname.split(".").slice(-3).join(".");
-const auth = WeDeploy.auth(`auth.${DOMAIN}`);
-const data = WeDeploy.data(`data.${DOMAIN}`);
-const userTable = document.getElementById('user-ranking');
+const ELEMS = {
+  userTable: document.getElementById('user-ranking')
+};
+
+let auth = WeDeploy.auth(`auth.${DOMAIN}`);
+let data = WeDeploy.data(`data.${DOMAIN}`);
 
 
 function main() {
@@ -35,15 +38,13 @@ function getUsers () {
 }
 
 function renderTable (users) {
-  let tableBody = users.reduce((acumulated, current, index) => {
-    return acumulated + renderUser(current, index);
-  }, "");
-
-  userTable.innerHTML = tableBody;
+  ELEMS.userTable.innerHTML = users
+    .reduce((acum, curr, ndx) =>
+      acum + createUserRow(curr, ndx), "");
 }
 
 
-function renderUser(userStats, index) {
+function createUserRow(userStats, index) {
   let { email, correctAnswers } = userStats;
 
   return `

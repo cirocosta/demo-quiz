@@ -19,30 +19,31 @@ const ELEMS = {
 
 let auth = WeDeploy.auth(`auth.${DOMAIN}`);
 let generator = WeDeploy.url(`generator.${DOMAIN}`);
+let data = WeDeploy.data(`data.${DOMAIN}`);
 
 let questions = [];
 let qndx = 0;
+
 
 function main() {
   if (!auth.currentUser) {
     window.location = "/login";
   }
 
-  renderUser(auth.currentUser);
+  renderUserHeader(auth.currentUser);
 
   getQuestions()
     .then(showNextQuestion);
 
-  getRanking()
-    .then(watchRanking);
+  getUsers()
+    .then(renderTable)
+    .then(watchUsers);
 }
 
 function signOut() {
   auth
     .signOut()
-    .then(() => {
-      location.href = '/login';
-    });
+    .then(() => location.href = '/login');
 }
 
 function showNextQuestion() {
@@ -68,18 +69,15 @@ function restartQuestionUI() {
   ELEMS.footer.classList.remove('visible');
 }
 
-function renderUser(user) {
+function renderUserHeader(user) {
   if (user.photoUrl) {
     ELEMS.userPhoto.src = user.photoUrl;
   }
 
-  if(user.name) {
-    ELEMS.userName.innerHTML = user.name;
-    ELEMS.userInitials.innerHTML = user.name.charAt(0);
-  } else {
-    ELEMS.userName.innerHTML = user.email;
-    ELEMS.userInitials.innerHTML = user.email.charAt(0);
-  }
+  ELEMS.userName.innerHTML = user.name || user.email;
+  ELEMS.userInitials.innerHTML = user.name
+    ? user.name.charAt(0)
+    : user.email.charAt(0);
 }
 
 function renderQuestion(question) {
@@ -204,7 +202,7 @@ function storeAnswer(questionId, isCorrect) {
       correct: isCorrect,
       timestamp: new Date()
     })
-    .then((response) => {
+    .then(() => {
       handleAnswerSubTitle(questionId, isCorrect);
     });
 }
@@ -217,47 +215,40 @@ function getQuestions () {
     .get()
     .then((clientResponse) => {
       questions = clientResponse.body();
-
-      return questions;
     });
 }
 
-function getRanking () {
-  let data = WeDeploy.data(`data.${DOMAIN}`);
-
+function getUsers () {
   return data
     .orderBy('correctAnswers', 'desc')
     .limit(10)
-    .get('users')
-    .then((users) => {
-      users.forEach(renderUserRanking);
-    });
+    .get('users');
 }
 
-function watchRanking () {
-  let data = WeDeploy.data(`data.${DOMAIN}`);
-
-  return data
+function watchUsers () {
+  data
     .orderBy('correctAnswers', 'desc')
     .limit(10)
     .watch('users')
-    .on('changes', (users) => {
-      users.forEach(renderUserRanking);
-    });
+    .on('changes', renderTable);
 }
 
-// update entire table
-function renderUserRanking(userStats, index) {
-  let row = ELEMS.rankingTable.insertRow(-1);
-
-  let positionCell = row.insertCell(0);
-  positionCell.innerHTML = index+1;
-
-  let nameCell = row.insertCell(1);
-  nameCell.innerHTML = userStats.email;
-
-  let pointsCell = row.insertCell(2);
-  pointsCell.innerHTML = userStats.correctAnswers;
+function renderTable (users) {
+  ELEMS.rankingTable.innerHTML = users
+    .reduce((acum, curr, ndx) =>
+      acum + createUserRow(curr, ndx), "");
 }
+
+function createUserRow(userStats, index) {
+  let { email, correctAnswers } = userStats;
+
+  return `
+    <tr>
+      <td>${index + 1}</td>
+      <td>${email}</td>
+      <td>${correctAnswers}</td>
+    </tr>`;
+}
+
 
 main();
