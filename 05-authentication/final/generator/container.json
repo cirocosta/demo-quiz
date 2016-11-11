@@ -1,0 +1,7 @@
+{
+	"id": "generator",
+	"type": "wedeploy/java",
+    "hooks": {
+        "build": "./gradlew clean build"
+    }
+}
