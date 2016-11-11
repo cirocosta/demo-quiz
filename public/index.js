@@ -12,7 +12,9 @@ const ELEMS = {
 
   userPhoto: document.getElementById('userPhoto'),
   userName: document.getElementById('userName'),
-  userInitials: document.getElementById('userName'),
+  userInitials: document.getElementById('userInitials'),
+
+  rankingTable: document.getElementById('user-ranking')
 };
 
 let auth = WeDeploy.auth(`auth.${DOMAIN}`);
@@ -32,6 +34,8 @@ function main() {
 
   getQuestions()
     .then(showNextQuestion);
+
+  getRanking();
 }
 
 function signOut() {
@@ -217,6 +221,33 @@ function getQuestions () {
 
       return questions;
     });
+}
+
+function getRanking () {
+  let data = WeDeploy.data(`data.${DOMAIN}`);
+
+  data
+    .orderBy('correctAnswers', 'desc')
+    .limit(10)
+    .get('users')
+    .then(function(users) {
+      users.forEach(renderUserRanking);
+    });
+}
+
+function renderUserRanking(userStats, index) {
+  //ELEMS.rankingTable.innerHtml += `<tr><td>${index}</td><td>${user.name ? user.name : user.email}</td><td>${user.correctAnswers}</td></tr>`;
+
+  let row = ELEMS.rankingTable.insertRow(-1);
+
+  let positionCell = row.insertCell(0);
+  positionCell.innerHTML = index+1;
+
+  let nameCell = row.insertCell(1);
+  nameCell.innerHTML = userStats.email;
+
+  let pointsCell = row.insertCell(2);
+  pointsCell.innerHTML = userStats.correctAnswers;
 }
 
 main();

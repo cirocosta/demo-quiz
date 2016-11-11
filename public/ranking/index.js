@@ -21,13 +21,13 @@ function main() {
 
 function renderUser(userStats, index) {
 	let row = userTable.insertRow(-1);
-  
+
   let positionCell = row.insertCell(0);
   positionCell.innerHTML = index+1;
 
   let nameCell = row.insertCell(1);
   nameCell.innerHTML = userStats.email;
-	
+
   let pointsCell = row.insertCell(2);
   pointsCell.innerHTML = userStats.correctAnswers;
 }

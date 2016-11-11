@@ -48,47 +48,29 @@
       </footer>
     </div>
 
-    <div class="ranking-container flex-column-top-center">
+    <div id="ranking-container" class="ranking-container flex-column-top-center">
 
-      <div id="ranking-correct" class="ranking">
+      <div class="ranking">
         <header>
           <div class="content-header">
-            <a href="#ranking-correct"><h1>Correct Answers</h1></a>
+            <a href="#ranking-container"><h1>Ranking</h1></a>
           </div>
         </header>
         <table>
           <thead>
             <tr>
-              <th width="20%">
+              <th width="10%">
                 #
               </th>
-              <th width="80%" class="left">
-                Question
+              <th width="60%">
+                Name
+              </th>
+              <th width="30%">
+                Points
               </th>
             </tr>
           </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-
-      <div id="ranking-wrong" class="ranking">
-        <header>
-          <div class="content-header">
-            <a href="#ranking-wrong"><h1>Wrong Answers</h1></a>
-          </div>
-        </header>
-        <table>
-          <thead>
-            <tr>
-              <th width="20%">
-                #
-              </th>
-              <th width="80%" class="left">
-                Question
-              </th>
-            </tr>
-          </thead>
-          <tbody></tbody>
+          <tbody id="user-ranking"></tbody>
         </table>
       </div>
     </div>
