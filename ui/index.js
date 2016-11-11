@@ -33,7 +33,8 @@ function main() {
   getQuestions()
     .then(showNextQuestion);
 
-  getRanking();
+  getRanking()
+    .then(watchRanking);
 }
 
 function signOut() {
@@ -223,15 +224,28 @@ function getQuestions () {
 function getRanking () {
   let data = WeDeploy.data(`data.${DOMAIN}`);
 
-  data
+  return data
     .orderBy('correctAnswers', 'desc')
     .limit(10)
     .get('users')
-    .then(function(users) {
+    .then((users) => {
       users.forEach(renderUserRanking);
     });
 }
 
+function watchRanking () {
+  let data = WeDeploy.data(`data.${DOMAIN}`);
+
+  return data
+    .orderBy('correctAnswers', 'desc')
+    .limit(10)
+    .watch('users')
+    .on('changes', (users) => {
+      users.forEach(renderUserRanking);
+    });
+}
+
+// update entire table
 function renderUserRanking(userStats, index) {
   let row = ELEMS.rankingTable.insertRow(-1);
 
