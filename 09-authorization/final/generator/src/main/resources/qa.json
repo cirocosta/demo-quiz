@@ -1,0 +1,9 @@
+[
+  ["Who built WeDeploy?", ["Liferay", "Liferay :heart: WeDeploy"], ["Google", "Google will deploy the world... not!"]],
+  ["How many containers you have in free mode?", ["5", "Five is super cool!"], ["4", "Four is little."]],
+  ["Where are the WeDeploy docs?", ["wedeploy.com", "And it looks awesome!"], ["wedeploy.me", "Me or you?"]],
+  ["Does WeDeploy speak Ruby?", ["yes", "Ruby shines!"], ["no", "What is Ruby?"]],
+  ["Does WeDeploy know NodeJS?", ["yes", "NodeJS is cool!"], ["no", "What is NodeJS?"]],
+  ["What is the CLI name?", ["we", "We can do it!"], ["wup", "huh!?"]],
+  ["What is the filename for project definition?", ["project.json", "It's that simple"], ["project.xml", "You are kidding, right?"]]
+]

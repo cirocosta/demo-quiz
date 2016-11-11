@@ -1,0 +1,96 @@
+[
+  {
+    "path": "/answers",
+    "method": "post",
+    "data": true,
+    "auth": {
+      "validator": "$auth.id === $body.userId"
+    },
+    "parameters": {
+      "userId": {
+        "type": "string",
+        "required": true
+      },
+      "questionId": {
+        "type": "string",
+        "required": true
+      },
+      "correct": {
+        "type": "boolean",
+        "required": true
+      },
+      "timestamp": {
+        "type": "string",
+        "required": true
+      }
+    }
+  },
+  {
+    "path": "/answers",
+    "method": "get",
+    "data": true,
+    "auth": {
+      "validator": "$auth != null"
+    },
+    "parameters": {
+      "filter": {
+        "value": {
+          "userId": "$auth.id"
+        }
+      }
+    }
+  },
+  {
+    "path": "/users/*",
+    "method": "get",
+    "data": true
+  },
+  {
+    "path": "/users",
+    "method": "post",
+    "data": true,
+    "auth": {
+      "validator": "$auth.id === $body.id"
+    },
+    "parameters": {
+      "id": {
+        "type": "string",
+        "required": true
+      },
+      "email": {
+        "type": "string",
+        "required": true
+      },
+      "correctAnswers": {
+        "type": "number",
+        "required": true
+      },
+      "wrongAnswers": {
+        "type": "number",
+        "required": true
+      }
+    }
+  },
+  {
+    "path": "/users/:userId",
+    "method": "put",
+    "data": true,
+    "auth": {
+      "validator": "$auth.id == $params.userId"
+    },
+    "parameters": {
+      "email": {
+        "type": "string",
+        "required": true
+      },
+      "correctAnswers": {
+        "type": "number",
+        "required": true
+      },
+      "wrongAnswers": {
+        "type": "number",
+        "required": true
+      }
+    }
+  }
+]
