@@ -1,9 +1,12 @@
 'use strict';
 
 const DOMAIN = window.location.hostname.split(".").slice(-3).join(".");
-const auth = WeDeploy.auth(`auth.${DOMAIN}`);
-const data = WeDeploy.data(`data.${DOMAIN}`);
-const userTable = document.getElementById('user-ranking');
+const ELEMS = {
+  userTable: document.getElementById('user-ranking')
+};
+
+let auth = WeDeploy.auth(`auth.${DOMAIN}`);
+let data = WeDeploy.data(`data.${DOMAIN}`);
 
 
 function main() {
@@ -13,18 +16,17 @@ function main() {
   }
 
   getUsers()
-    .then((users) => {
-      users.forEach(renderUser);
-    });
+    .then(renderTable)
+    .then(watchUsers);
 }
 
-function ldata
+function watchUsers () {
   data
     .orderBy('correctAnswers', 'desc')
     .limit(10)
-    .watch()
-    .on('changes', (abc) => {
-      console.log(abc);
+    .watch('users')
+    .on('changes', (users) => {
+      renderTable(users);
     });
 }
 
@@ -35,17 +37,22 @@ function getUsers () {
     .get('users');
 }
 
-function renderUser(userStats, index) {
-	let row = userTable.insertRow(-1);
+function renderTable (users) {
+  ELEMS.userTable.innerHTML = users
+    .reduce((acum, curr, ndx) =>
+      acum + createUserRow(curr, ndx), "");
+}
 
-  let positionCell = row.insertCell(0);
-  positionCell.innerHTML = index+1;
 
-  let nameCell = row.insertCell(1);
-  nameCell.innerHTML = userStats.email;
+function createUserRow(userStats, index) {
+  let { email, correctAnswers } = userStats;
 
-  let pointsCell = row.insertCell(2);
-  pointsCell.innerHTML = userStats.correctAnswers;
+  return `
+    <tr>
+      <td>${index + 1}</td>
+      <td>${email}</td>
+      <td>${correctAnswers}</td>
+    </tr>`;
 }
 
 main();
