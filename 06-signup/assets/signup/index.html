@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>devQA :: Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+
+  <link rel="stylesheet" type="text/css" href="/assets/style/reset.css">
+  <link rel="stylesheet" type="text/css" href="/assets/style/fonts/galano/galano.css">
+  <link rel="stylesheet" type="text/css" href="/assets/style/fonts/opensans/opensans.css">
+  <link rel="stylesheet" type="text/css" href="/assets/style/fonts/icon-12/icon-12.css">
+  <link rel="stylesheet" type="text/css" href="/assets/style/fonts/icon-16/icon-16.css">
+  <link rel="stylesheet" type="text/css" href="/assets/style/main.css">
+</head>
+<body class="green">
+
+	<header class="grid-login">
+		<div class="content-header">
+			<h1>Create your account</h1>
+		</div>
+	</header>
+
+	<main class="grid-login">
+		<section>
+			<div class="content-body">
+
+				<div class="logo">
+					<span>dev<strong>QA</strong></span>
+				</div>
+
+        <div id="alert" class="alert alert-danger"></div>
+
+				<form name="signUp" class="form" onsubmit="submitForm(); return false;">
+
+					<div class="form-group">
+						<label>Name</label>
+						<input type="text" placeholder="Your full name" class="form-control" name="name" value="" maxlength="100" autofocus="" required="">
+					</div>
+
+					<div class="form-group">
+						<label>Email</label>
+						<input type="email" placeholder="youremail@company.com" class="form-control" name="email" value="" maxlength="100" autofocus="" required="" />
+					</div>
+
+					<div class="form-group">
+						<label>Password</label>
+						<input type="password" placeholder="Password (at least 6 characters)" class="form-control" name="password" value="" maxlength="100" required="" />
+					</div>
+
+					<div class="btn-wrapper">
+						<button type="submit" class="btn btn-success" name="submit">Create an Account</button>
+					</div>
+
+				</form>
+
+				<p class="info-small">Already have an account? <a href="../login/">Login</a></p>
+			</div>
+		</section>
+
+	</main>
+
+    <script src="/assets/wedeploy.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>
