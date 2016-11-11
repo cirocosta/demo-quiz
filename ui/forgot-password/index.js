@@ -7,11 +7,17 @@ const alert = document.getElementById('alert');
 function resetPassword() {
   auth
     .sendPasswordResetEmail(forgotPassword.email.value)
-    .then(() => {
-      alert.innerHTML = '<p>An email with instructions to reset password should arrive in a few minutes.</p>';
-      alert.innerHTML += '<button><span class="close icon-12-close-short" onclick="closeAlert()"></span></button>';
-      alert.classList.add('visible');
-    });
+    .then(showAlertEmailSent);
+}
+
+function showAlertEmailSent () {
+  alert.innerHTML = `
+    <p>An email with instructions to reset password should arrive in a few minutes.</p>
+    <button>
+      <span class="close icon-12-close-short" onclick="closeAlert()"></span>
+    </button>`;
+
+  alert.classList.add('visible');
 }
 
 function closeAlert() {
