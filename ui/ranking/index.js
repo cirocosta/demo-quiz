@@ -5,18 +5,24 @@ const auth = WeDeploy.auth(`auth.${DOMAIN}`);
 const data = WeDeploy.data(`data.${DOMAIN}`);
 const userTable = document.getElementById('user-ranking');
 
+
 function main() {
   if (!auth.currentUser) {
     window.location = "/login";
+    return;
   }
 
-  data
-    .orderBy('correctAnswers', 'desc')
-    .limit(10)
-    .get('users')
-    .then(function(users) {
+  getUsers()
+    .then((users) => {
       users.forEach(renderUser);
     });
+}
+
+function getUsers () {
+  return data
+    .orderBy('correctAnswers', 'desc')
+    .limit(10)
+    .get('users');
 }
 
 function renderUser(userStats, index) {

@@ -24,13 +24,11 @@ let questions = [];
 let qndx = 0;
 
 function main() {
-  let { currentUser } = auth;
-
-  if (!currentUser) {
+  if (!auth.currentUser) {
     window.location = "/login";
   }
 
-  renderUser(currentUser);
+  renderUser(auth.currentUser);
 
   getQuestions()
     .then(showNextQuestion);
@@ -88,7 +86,8 @@ function renderQuestion(question) {
 
   question
     .answers
-    .forEach((answer) => renderAnswer(ELEMS.grid, question, answer));
+    .forEach((answer) =>
+      renderAnswer(ELEMS.grid, question, answer));
 }
 
 function renderAnswer(component, question, answer) {
@@ -102,24 +101,21 @@ function renderAnswer(component, question, answer) {
 }
 
 function checkAnswer(event, questionId, answerId) {
-  generator
+  return generator
     .path('check')
     .param('questionId', questionId)
     .param('answerId', answerId)
     .get()
     .then((response) => {
-      let isSuccess = response.body();
-
-      if (isSuccess) {
-        success(event);
-      } else {
-        error(event);
-      }
+      response.body()
+        ? success(event)
+        : error(event);
     });
 }
 
 function success(event) {
   let validationTitle = validation.querySelector('h1');
+
   validationTitle.innerHTML = 'Correct!';
   ELEMS.footer.classList.add('visible');
   handleAnswer(event, true);
@@ -160,8 +156,8 @@ function handleAnswerSubTitle(questionId) {
       let validationSubTitle = validation.querySelector('p');
       let aggregations = result.aggregations.dist;
 
-      var correctCount = aggregations['1'] || 0;
-      var wrongCount = aggregations['0'] || 0;
+      let correctCount = aggregations['1'] || 0;
+      let wrongCount = aggregations['0'] || 0;
 
       validationSubTitle.innerHTML = `This question was answered`;
       validationSubTitle.innerHTML += ` ${correctCount} time${correctCount > 1 ? 's' : ''} correctly`;
@@ -177,12 +173,12 @@ function incrementUserStats(isCorrect) {
     .then((userStats) => {
       if (isCorrect) {
         userStats.correctAnswers += 1;
-      }
-      else {
+      } else {
         userStats.wrongAnswers += 1;
       }
 
-      return data.update(`users/${auth.currentUser.id}`, userStats);
+      return data
+        .update(`users/${auth.currentUser.id}`, userStats);
     })
     .catch((error) => {
       let userStats = {
@@ -192,7 +188,8 @@ function incrementUserStats(isCorrect) {
         email: auth.currentUser.email
       };
 
-      return data.create(`users`, userStats);
+      return data
+        .create(`users`, userStats);
     });
 }
 
@@ -236,8 +233,6 @@ function getRanking () {
 }
 
 function renderUserRanking(userStats, index) {
-  //ELEMS.rankingTable.innerHtml += `<tr><td>${index}</td><td>${user.name ? user.name : user.email}</td><td>${user.correctAnswers}</td></tr>`;
-
   let row = ELEMS.rankingTable.insertRow(-1);
 
   let positionCell = row.insertCell(0);
