@@ -48,6 +48,7 @@ function signOut() {
 function showNextQuestion() {
   if (qndx == questions.length) {
     location.href = "/ranking";
+    return;
   }
 
   let question = questions[qndx++];
