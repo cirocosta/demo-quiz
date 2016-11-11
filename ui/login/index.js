@@ -4,9 +4,15 @@ const DOMAIN = window.location.hostname.split(".").slice(-3).join(".");
 const auth = WeDeploy.auth(`auth.${DOMAIN}`);
 const alert = document.getElementById('alert');
 
+
+auth.onSignIn(() =>
+  location.href = '/');
+
+
 function signInWithEmailAndPassword() {
-  auth.signInWithEmailAndPassword(signIn.email.value, signIn.password.value)
-    .then(() => signIn.reset())
+  auth
+    .signInWithEmailAndPassword(signIn.email.value, signIn.password.value)
+    .then(signIn.reset)
     .catch(() => {
       showAlertWrongEmailOrPassword();
       signIn.reset();
@@ -40,6 +46,3 @@ function signInWithGoogle() {
   auth.signInWithRedirect(googleProvider);
 }
 
-auth.onSignIn((user) => {
-  location.href = '/';
-});

@@ -5,19 +5,22 @@ const auth = WeDeploy.auth(`auth.${DOMAIN}`);
 const alert = document.getElementById('alert');
 
 
+auth.onSignIn(() =>
+  location.href = '/');
+
+
 function submitForm() {
   const password = signUp.password.value;
   const email = signUp.email.value;
 
-  return auth
+  auth
     .createUser({
       name: signUp.name.value,
       email,
       password,
     })
-    .then((user) => {
-      signInWithEmailAndPassword(email, password);
-    }).catch(() => {
+    .then(signInWithEmailAndPassword(email, password))
+    .catch(() => {
       showAlertEmailAlreadyInUse();
       signUp.reset();
     });
@@ -26,7 +29,7 @@ function submitForm() {
 function signInWithEmailAndPassword(email, password) {
   return auth
     .signInWithEmailAndPassword(email, password)
-    .then(() => signUp.reset())
+    .then(signUp.reset)
     .catch(() => {
       showAlertWrongEmailOrPassword();
       signUp.reset();
@@ -57,6 +60,4 @@ function showAlertWrongEmailOrPassword () {
 function closeAlert() {
   alert.classList.remove('visible');
 }
-
-auth.onSignIn(() => location.href = '/');
 
