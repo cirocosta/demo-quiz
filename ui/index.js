@@ -137,10 +137,10 @@ function handleAnswer(event, isCorrect) {
   const otherCard = card.parentNode.querySelector(`.half:not(.${className})`);
   otherCard.style.display = 'none';
 
-  incrementUserStats(isCorrect);
-
   let idxQuestion = questions[qndx-1];
   storeAnswer(idxQuestion.id, isCorrect);
+
+  incrementUserStats(isCorrect);
 }
 
 function handleAnswerSubTitle(questionId) {
@@ -166,6 +166,7 @@ function handleAnswerSubTitle(questionId) {
 function incrementUserStats(isCorrect) {
   return WeDeploy
     .url(`auth.${DOMAIN}`)
+    .auth(auth.currentUser.token)
     .path('user')
     .get()
     .then((response) => {
