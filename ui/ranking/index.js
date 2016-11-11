@@ -18,6 +18,16 @@ function main() {
     });
 }
 
+function ldata
+  data
+    .orderBy('correctAnswers', 'desc')
+    .limit(10)
+    .watch()
+    .on('changes', (abc) => {
+      console.log(abc);
+    });
+}
+
 function getUsers () {
   return data
     .orderBy('correctAnswers', 'desc')

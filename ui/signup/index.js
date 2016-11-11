@@ -6,15 +6,18 @@ const alert = document.getElementById('alert');
 
 
 function submitForm() {
+  const password = signUp.password.value;
+  const email = signUp.email.value;
+
   return auth
     .createUser({
-      email: signUp.email.value,
       name: signUp.name.value,
-      password: signUp.password.value
+      email,
+      password,
     })
-    .then((user) =>
-      signInWithEmailAndPassword(email, password))
-    .catch(() => {
+    .then((user) => {
+      signInWithEmailAndPassword(email, password);
+    }).catch(() => {
       showAlertEmailAlreadyInUse();
       signUp.reset();
     });
