@@ -6,7 +6,6 @@ const ELEMS = {
 };
 
 let auth = WeDeploy.auth(`auth.${DOMAIN}`);
-let data = WeDeploy.data(`data.${DOMAIN}`);
 
 
 function main() {
@@ -20,21 +19,21 @@ function main() {
     .then(watchUsers);
 }
 
-function watchUsers() {
-  data
+function getUsers() {
+  return WeDeploy
+    .data(`auth.${DOMAIN}`)
     .orderBy('correctAnswers', 'desc')
-    .limit(10)
-    .watch('users')
-    .on('changes', (users) => {
-      renderTable(users);
-    });
+    .limit(5)
+    .get('users');
 }
 
-function getUsers() {
-  return data
+function watchUsers() {
+  WeDeploy
+    .data(`auth.${DOMAIN}`)
     .orderBy('correctAnswers', 'desc')
-    .limit(10)
-    .get('users');
+    .limit(5)
+    .watch('users')
+    .on('changes', renderTable);
 }
 
 function renderTable(users) {
@@ -43,15 +42,14 @@ function renderTable(users) {
       acum + createUserRow(curr, ndx), "");
 }
 
-
 function createUserRow(userStats, index) {
-  let { email, correctAnswers } = userStats;
+  let { name, email, correctAnswers } = userStats;
 
   return `
     <tr>
       <td>${index + 1}</td>
-      <td>${email}</td>
-      <td>${correctAnswers}</td>
+      <td>${name ? name : email}</td>
+      <td>${correctAnswers || 0}</td>
     </tr>`;
 }
 

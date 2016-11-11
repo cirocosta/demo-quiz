@@ -166,30 +166,23 @@ function handleAnswerSubTitle(questionId) {
 }
 
 function incrementUserStats(isCorrect) {
-  let data = WeDeploy.data(`data.${DOMAIN}`);
+  return WeDeploy
+    .url(`auth.${DOMAIN}`)
+    .path('user')
+    .get()
+    .then((response) => {
+      let user = response.body();
+      let stats = {};
 
-  return data
-    .get(`users/${auth.currentUser.id}`)
-    .then((userStats) => {
       if (isCorrect) {
-        userStats.correctAnswers += 1;
+        stats.correctAnswers = (user.correctAnswers || 0) + 1;
       } else {
-        userStats.wrongAnswers += 1;
+        stats.wrongAnswers = (user.wrongAnswers || 0) + 1;
       }
 
-      return data
-        .update(`users/${auth.currentUser.id}`, userStats);
-    })
-    .catch((error) => {
-      let userStats = {
-        id: auth.currentUser.id,
-        correctAnswers: (isCorrect ? 1 : 0),
-        wrongAnswers: (isCorrect ? 0 : 1),
-        email: auth.currentUser.email
-      };
-
-      return data
-        .create(`users`, userStats);
+      return auth
+        .currentUser
+        .updateUser(stats);
     });
 }
 
@@ -219,14 +212,16 @@ function getQuestions() {
 }
 
 function getUsers() {
-  return data
+  return WeDeploy
+    .data(`auth.${DOMAIN}`)
     .orderBy('correctAnswers', 'desc')
     .limit(5)
     .get('users');
 }
 
 function watchUsers() {
-  data
+  WeDeploy
+    .data(`auth.${DOMAIN}`)
     .orderBy('correctAnswers', 'desc')
     .limit(5)
     .watch('users')
@@ -240,13 +235,13 @@ function renderTable(users) {
 }
 
 function createUserRow(userStats, index) {
-  let { email, correctAnswers } = userStats;
+  let { name, email, correctAnswers } = userStats;
 
   return `
     <tr>
       <td>${index + 1}</td>
-      <td>${email}</td>
-      <td>${correctAnswers}</td>
+      <td>${name ? name : email}</td>
+      <td>${correctAnswers || 0}</td>
     </tr>`;
 }
 

@@ -29,7 +29,7 @@ function closeAlert() {
 function signInWithGithub() {
   const githubProvider = new auth.provider.Github();
 
-  githubProvider.setProviderScope('email');
+  githubProvider.setProviderScope('user:email');
   auth.signInWithRedirect(githubProvider);
 }
 
