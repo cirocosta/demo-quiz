@@ -40,7 +40,9 @@ function main() {
 function signOut() {
   auth
     .signOut()
-    .then(() => location.href = '/login');
+    .then(() => {
+      location.href = '/login';
+    });
 }
 
 function showNextQuestion() {
