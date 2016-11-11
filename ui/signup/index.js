@@ -33,7 +33,7 @@ function signInWithEmailAndPassword(email, password) {
     });
 }
 
-function showAlertEmailAlreadyInUse () {
+function showAlertEmailAlreadyInUse() {
   alert.innerHTML = `
     <p>Email already in use. Try another email.</p>
     <button>
@@ -43,7 +43,7 @@ function showAlertEmailAlreadyInUse () {
   alert.classList.add('visible');
 }
 
-function showAlertWrongEmailOrPassword () {
+function showAlertWrongEmailOrPassword() {
   alert.innerHTML = `
     <p>Wrong email or password.</p>
     <button>

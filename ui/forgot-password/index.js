@@ -10,7 +10,7 @@ function resetPassword() {
     .then(showAlertEmailSent);
 }
 
-function showAlertEmailSent () {
+function showAlertEmailSent() {
   alert.innerHTML = `
     <p>An email with instructions to reset password should arrive in a few minutes.</p>
     <button>

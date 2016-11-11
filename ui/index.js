@@ -17,11 +17,10 @@ const ELEMS = {
   rankingTable: document.getElementById('user-ranking')
 };
 
-let auth = WeDeploy.auth(`auth.${DOMAIN}`);
-
 let questions = [];
 let qndx = 0;
 
+const auth = WeDeploy.auth(`auth.${DOMAIN}`);
 
 function main() {
   if (!auth.currentUser) {

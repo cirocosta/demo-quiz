@@ -13,7 +13,7 @@ function signInWithEmailAndPassword() {
     });
 }
 
-function showAlertWrongEmailOrPassword () {
+function showAlertWrongEmailOrPassword() {
   alert.innerHTML = `
     <p>Wrong email or password.</p>
     <button>
