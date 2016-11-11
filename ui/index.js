@@ -18,8 +18,6 @@ const ELEMS = {
 };
 
 let auth = WeDeploy.auth(`auth.${DOMAIN}`);
-let generator = WeDeploy.url(`generator.${DOMAIN}`);
-let data = WeDeploy.data(`data.${DOMAIN}`);
 
 let questions = [];
 let qndx = 0;
@@ -101,7 +99,8 @@ function renderAnswer(component, question, answer) {
 }
 
 function checkAnswer(event, questionId, answerId) {
-  return generator
+  return WeDeploy
+    .url(`generator.${DOMAIN}`)
     .path('check')
     .param('questionId', questionId)
     .param('answerId', answerId)
@@ -201,7 +200,8 @@ function storeAnswer(questionId, isCorrect) {
 }
 
 function getQuestions() {
-  return generator
+  return WeDeploy
+    .url(`generator.${DOMAIN}`)
     .path('questions')
     .param('random', 'true')
     .param('limit', 3)
