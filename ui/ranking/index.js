@@ -20,7 +20,7 @@ function main() {
     .then(watchUsers);
 }
 
-function watchUsers () {
+function watchUsers() {
   data
     .orderBy('correctAnswers', 'desc')
     .limit(10)
@@ -30,14 +30,14 @@ function watchUsers () {
     });
 }
 
-function getUsers () {
+function getUsers() {
   return data
     .orderBy('correctAnswers', 'desc')
     .limit(10)
     .get('users');
 }
 
-function renderTable (users) {
+function renderTable(users) {
   ELEMS.userTable.innerHTML = users
     .reduce((acum, curr, ndx) =>
       acum + createUserRow(curr, ndx), "");

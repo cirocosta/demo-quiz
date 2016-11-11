@@ -207,7 +207,7 @@ function storeAnswer(questionId, isCorrect) {
     });
 }
 
-function getQuestions () {
+function getQuestions() {
   return generator
     .path('questions')
     .param('random', 'true')
@@ -218,22 +218,22 @@ function getQuestions () {
     });
 }
 
-function getUsers () {
+function getUsers() {
   return data
     .orderBy('correctAnswers', 'desc')
-    .limit(10)
+    .limit(5)
     .get('users');
 }
 
-function watchUsers () {
+function watchUsers() {
   data
     .orderBy('correctAnswers', 'desc')
-    .limit(10)
+    .limit(5)
     .watch('users')
     .on('changes', renderTable);
 }
 
-function renderTable (users) {
+function renderTable(users) {
   ELEMS.rankingTable.innerHTML = users
     .reduce((acum, curr, ndx) =>
       acum + createUserRow(curr, ndx), "");

@@ -58,5 +58,7 @@ function closeAlert() {
   alert.classList.remove('visible');
 }
 
-auth.onSignIn(() => location.href = '/');
+auth.onSignIn((user) => {
+  location.href = '/';
+});
 
