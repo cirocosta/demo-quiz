@@ -1,24 +1,43 @@
 # devQA
 
+
 Learn how to create the [devQA](http://devqa.wedeploy.io) on *WeDeploy™* with this step-by-step tutorial.
 
 The final steps include iteraction with WeDeploy Dashboard, so go ahead and create your [account](http://dashboard.wedeploy.com/signup)! Its FREE!
 
 All of the following steps are covered by our [documentation](http://wedeploy.com/docs).
 
+**Table of Contents**
+
+- [Getting started](#getting-started)
+  - [Tutorials](#tutorials)
+    - [01 - Hosting](#01---hosting)
+    - [02 - Java](#02---java)
+    - [03 - Project](#03---project)
+    - [04 - Data](#04---data)
+    - [05 - Authentication](#05---authentication)
+    - [06 - Sign Up](#06---sign-up)
+    - [07 - Email](#07---email)
+    - [08 - Real-time](#08---real-time)
+    - [09 - Authorization](#09---authorization)
+    - [10 - Deployment](#10---deployment)
+  - [Apendix](#apendix)
+    - [Installing Java 8 on Ubuntu](#installing-java-8-on-ubuntu)
 
 
 ## Getting started
 
-We will be using WeDeploy Command-line. Follow [instalation guide](http://wedeploy.com/docs/intro/using-the-command-line.html).
+We will be using the WeDeploy Command-line (`we`). Follow [installation guide](http://wedeploy.com/docs/intro/using-the-command-line.html).
 
-For a better experience in docker for Mac or Windows, improve your docker to have at least **6GB** or RAM and **6** CPUs.
+For a better experience with Docker for Mac or Docker for Windows, configure it to have at least **6GB** or RAM and **6** CPUs.
 
-For this specific demo, you'll also need to install [Java](https://java.com/en/download/help/index_installing.xml).
+For this specific demo, you'll also need to install [Java 8](https://java.com/en/download/help/index_installing.xml). If you're on Ubuntu you might want to follow [Installing Java 8 on Ubuntu](#installing-java-8-on-ubuntu).
+
 
 Run our local server in a separate terminal. You should keep it running through this entire tutorial.
 
 	we run
+
 
 Fetch this repository, build and deploy locally
 
@@ -28,6 +47,7 @@ Fetch this repository, build and deploy locally
 	we link
 	open devqa.wedeploy.me
 
+
 You should see the demo home page in your browser.
 
 Once you're able to run it locally, stop it and switch to this tutorial branch
@@ -35,11 +55,13 @@ Once you're able to run it locally, stop it and switch to this tutorial branch
 	we unlink
 	git checkout -b tutorial origin/tutorial
 
+
 Create your workspace folder next to the cloned tutorial
 
 	cd ..
 	mkdir devqa
 	cd devqa
+
 
 You will find in each step a folder `final` containing the final state your workspace should be at after that step. You can start this tutorial at any step by copying the final state of the previous one into your `devqa` folder.
 
@@ -1125,3 +1147,28 @@ Go to the *Deployment* session of your new project and follow the steps to push 
 Access your quiz in the browser at http://<your-project-id>.wedeploy.io
 
 
+## Apendix
+
+### Installing Java 8 on Ubuntu
+
+Add the PPA:
+
+  sudo add-apt-repository ppa:webupd8team/java
+
+Once you've got it added, update `apt`s repositories and then install the `oracle-java8-installer`:
+
+  sudo apt update -y
+  sudo apt install -y orcale-java8-installer
+
+During the installation you'll be prompted for a confirmation of agreeing to the Oracle Binary License Agreement. If you're ok with it, go ahead and then you're done.
+
+You can check whether you're running the right `javac` by entering
+
+  javac -version
+  # javac 1.8.0_101
+
+You should now be able to set the envrionment variables required for running java seamlessly:
+
+  sudo apt install oracle-java8-set-default -y
+
+That's it!
