@@ -166,24 +166,28 @@ function handleAnswerSubTitle(questionId) {
 }
 
 function incrementUserStats(isCorrect) {
-  return WeDeploy
-    .url(`auth.${DOMAIN}`)
-    .auth(auth.currentUser.token)
-    .path('user')
-    .get()
-    .then((response) => {
-      let user = response.body();
-      let stats = {};
+  let data = WeDeploy.data(`data.${DOMAIN}`);
 
+  return data
+    .get(`users/${auth.currentUser.id}`)
+    .then((userStats) => {
       if (isCorrect) {
-        stats.correctAnswers = (user.correctAnswers || 0) + 1;
+        userStats.correctAnswers += 1;
       } else {
-        stats.wrongAnswers = (user.wrongAnswers || 0) + 1;
+        userStats.wrongAnswers += 1;
       }
 
-      return auth
-        .currentUser
-        .updateUser(stats);
+      data.update(`users/${auth.currentUser.id}`, stats);
+    })
+    .catch((error) => {
+      let userStats = {
+        id: auth.currentUser.id,
+        email: auth.currentUser.email,
+        correctAnswers: (isCorrect ? 1 : 0),
+        wrongAnswers: (isCorrect ? 0 : 1)
+      };
+
+      data.create('users', userStats);
     });
 }
 
@@ -215,7 +219,7 @@ function getQuestions() {
 
 function getUsers() {
   return WeDeploy
-    .data(`auth.${DOMAIN}`)
+    .data(`data.${DOMAIN}`)
     .orderBy('correctAnswers', 'desc')
     .limit(5)
     .get('users');
@@ -223,7 +227,7 @@ function getUsers() {
 
 function watchUsers() {
   WeDeploy
-    .data(`auth.${DOMAIN}`)
+    .data(`data.${DOMAIN}`)
     .orderBy('correctAnswers', 'desc')
     .limit(5)
     .watch('users')

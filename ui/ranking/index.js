@@ -21,7 +21,7 @@ function main() {
 
 function getUsers() {
   return WeDeploy
-    .data(`auth.${DOMAIN}`)
+    .data(`data.${DOMAIN}`)
     .orderBy('correctAnswers', 'desc')
     .limit(5)
     .get('users');
@@ -29,7 +29,7 @@ function getUsers() {
 
 function watchUsers() {
   WeDeploy
-    .data(`auth.${DOMAIN}`)
+    .data(`data.${DOMAIN}`)
     .orderBy('correctAnswers', 'desc')
     .limit(5)
     .watch('users')
