@@ -177,7 +177,7 @@ function incrementUserStats(isCorrect) {
         userStats.wrongAnswers += 1;
       }
 
-      data.update(`users/${auth.currentUser.id}`, stats);
+      data.update(`users/${auth.currentUser.id}`, userStats);
     })
     .catch((error) => {
       let userStats = {
