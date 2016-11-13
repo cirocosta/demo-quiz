@@ -4,7 +4,7 @@
     "method": "post",
     "data": true,
     "auth": {
-      "validator": "$auth.id === $body.userId"
+      "validator": "$auth.id == $body.userId"
     },
     "parameters": {
       "userId": {
@@ -50,7 +50,7 @@
     "method": "post",
     "data": true,
     "auth": {
-      "validator": "$auth.id === $body.id"
+      "validator": "$auth.id == $body.id"
     },
     "parameters": {
       "id": {
