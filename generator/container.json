@@ -1,6 +1,7 @@
 {
 	"id": "generator",
 	"type": "wedeploy/java",
+	"port": 8090,
     "hooks": {
         "build": "./gradlew clean build"
     }
